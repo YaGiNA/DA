@@ -1,0 +1,158 @@
+\cleardoublepage
+\selectlanguage{english} 
+\thispagestyle{plain}
+\begin{center}
+    \Large
+    \textbf{Proposal of Artificial Intelligence Models for\\Detecting Disinformation on Diversified Social Media}
+        
+    \vspace{0.4cm}
+    \textbf{Yuta Yanagi}
+       
+    \vspace{0.9cm}
+    \textbf{Abstract}
+   
+\end{center}
+%\begin{center}
+%    \vspace{5mm}
+%        {\Large \bf Proposal of Artificial Intelligence Models for\\Detecting Disinformation on Diversified Social Media}\\
+%    \vspace{10mm}
+%    Yuta Yanagi
+%\end{center} 
+%\begin{abstract}
+While the development of social media has enabled anyone to share information,
+the rapid sharing of disinformation (intentionally created false information, a.k.a. fake news) has also caused many social problems.
+Since human verification of disinformation requires a long time,
+there is a need for methods to detect disinformation using artificial intelligence automatically.
+In addition, there are instances of multimodal information on social media.
+The requirements in detection are expanding significantly.
+Therefore, it is hard to maintain detection performance for a long time with existing methods focusing on text. 
+We also need to consider the method which can apply multimodal information.
+Hence, we propose two novel detection methods: 
+(1) consider comments that commonly appear in natural languages among modalities, and 
+(2) target speech, which needs to be more well-prepared among the modalities. 
+%\newpage
+First, as a method that is less dependent on the modalities, we aimed to aid detection by generating comments.
+Since comments tend to be more critical of disinformation than factual information, 
+detection using comments in addition to articles is beneficial. 
+However, it is challenging to utilize many comments in early detection. 
+Therefore, to achieve both early detection and high accuracy,
+this study proposes generating comments on articles to simulate a post-diffusion situation to detect false information.
+We trained the proposed method to generate comments from the text of the article and the three comments.
+This process allows the model to understand what comments respond to the article’s content.
+In developing this method, we implemented a modified version of an existing method for generating false information.
+We tested the model with a dataset containing news articles and English comments.
+We examined the change in the detection result with a generated comment from the article and two real-posted comments.
+In specifying, we compared only the text of the article for detection and only the text and two existing comments for detection.
+According to the result, the proposed method showed the highest recall of 0.695,
+which means the model detected more disinformation than any other baselines.
+We also confirmed the effect of assisting generated comments, 
+as 48\% of the cases misidentified as factual in the absence of generated comments were overturned to fake by the addition of generated comments. 
+%\newpage
+Next, we also aimed to detect disinformation voices using synthesizing technologies as a form that requires immediate countermeasures amid the diversification of media.
+This study focused on voice because of the emergence of new forms of social media that deal with multimodal,
+and it is easy to reproduce the voice of an arbitrary person by synthesizing it. Since most existing research developed methods for biometric authentication systems,
+the methods analyze speech waveforms.
+However, with the development of synthesis technology,
+it is hard to maintain the performance of methods that detect only speech waveforms. 
+In addition, when we detect disinformation voices on social media,
+it is necessary to consider the content’s credibility.
+2846In an experiment using a synthetic voice that reads disinformation in social media,
+the proposed method showed an equivalent error rate of 44.6\%,
+an improvement from 50.7\% for the method that only considered the speech waveform,
+which was close to random selection. 
+
+There are two advantages to using these proposed methods.
+First, it can provide a new form of credibility judgment material through comment generation.
+The second is that it enables authenticity confirmation of voice comments that make questionable claims in terms of waveform and content.
+These contribute to improving the safety of social media. 
+%\end{abstract}
+
+%Recently, it is expected that personal information stored by different service providers are combined securely and it will create a new service. However, there is a risk that a specific user record can be identified by the combined personal information, and the user's sensitive information is revealed. Also, the personal information collected by the service provider must not be disclosed to other service providers because of security and privacy issues. Thus, related researches have been conducted on distributed anonymization methods, which combine the personal information stored by the providers and sanitize it to ensure a policy of anonymity with the minimum disclosure.
+
+%However, in those researches, if sets of the users among the providers are different, a problem occurs that the users' presence in either provider may be revealed. Therefore, this paper proposes a new indicator, named {\it $\delta$-site-presence}, which represents the probability of the users' presence being revealed. Also, this paper proposes an improved distributed anonymization protocol which satisfies the proposed indicator. This protocol uses dummy users who do not exist in the provider. The providers treat the dummy users as if they actually exist. By using the dummy users, it can anonymize the personal information without disclosing the users' presence.
+
+%We evaluate the security of the proposed protocol and proof that the protocol does not disclose any sensitive information. In addition, we evaluate the processing and communication cost of the protocol. The evaluation results show that the cost of the proposed protocol is not much higher than that of the existing protocols. 
+
+%Moreover, we evaluate the utility of the proposed protocol with U.S. Census data and health data. Our evaluation results show that the proposed protocol can anonymize them with lower information loss than the existing distributed anonymization method.
+
+%It is expected that our method combine not only census data and health data but also several types of the personal information and there is a possibility that a new service will be created.
+%\\
+
+\thispagestyle{plain}
+\cleardoublepage
+%
+%
+%%%%%%%% 和文の概要 %%%%%%%%%%%%
+
+\begin{center}
+    \Large
+    \textbf{媒体が多様化するSNS上の偽情報検出\\に向けた人工知能モデルの提案}
+        
+    \vspace{0.4cm}
+    \textbf{栁 裕太}
+       
+    \vspace{0.9cm}
+    \textbf{概要}
+   
+\end{center}
+
+\selectlanguage{japanese} 
+%\begin{abstract}
+%背景
+ソーシャル・ネットワーキング・サービス(SNS)の発展によって誰もが情報を拡散できるようになった反面、意図的に作成された偽情報も急速に拡散される影響で多くの社会問題を引き起こしている。
+人手による偽情報の検出には時間がかかるため、人工知能によって自動で検出する手法が求められている。
+一方で、新しい生成技術の登場や広く使われるSNSの変化によって扱われる媒体が多様化しており、検出において必要な要求が大きく広がりつつある。
+よって、文章を中心とした既存の手法では検出性能を長い期間維持しにくいほか、新しい媒体を使用したSNSへの適用も難しい。
+そこで本論文では新たな検出手法として、媒体に左右されず自然言語として投稿されるコメントを扱う手法と、媒体が多様化する中で対策が手薄になっている音声を対象とした手法を提案する。
+
+%実験1
+%%目的
+まず媒体に左右されにくい手法として、コメントの生成による検出の補助を目指した。
+偽情報が事実に基づく情報に比べてコメントが批判的な内容になりやすいことから記事に加えてコメントを使った検出が有用である反面、
+早期検出においては多数のコメントの活用が難しい部分に着目した。
+そこで本研究は早期検出と高精度の両立を目指して、記事に対するコメントを生成して拡散後の状況を擬似的に作り、偽情報検出を補助する手法を提案する。
+%手法
+提案手法は記事の本文と3件のコメントからコメントを生成する学習を行い、記事の内容に対してどのようなコメントが寄せられたか把握させる。
+この手法の開発にあたって、偽情報を生成する既存手法を改変する形で実装した。
+%実験
+%\newpage
+英文記事とコメントのデータセットを使用した実験では、学習させた手法に対して本文と2件のコメントから追加で1件コメントを生成させた上で、別の偽情報検出モデルの性能に変化があったか調べた。
+比較対象として、記事本文のみで検出を行った場合と、本文と実在コメント2件のみで検出を行った場合を用意した。
+提案手法の再現率(Recall)は0.695と全体で最も高い結果を示し、より多くの偽情報を検出した。
+一方で適合率(Precision)に改善の余地を残しているものの、生成コメントの追加によって検出結果がFakeに覆った割合が48\%と、生成コメントの追加による効果がみられた。
+% 既存手法で不足している指摘
+% なぜこの手法を開発することにしたか？という部分は確実に聞かれる
+% コメント生成→媒体に左右されにくい+何らかのポイントを追加したい
+% 音声→現状で手薄
+% 全体図で手薄な部分の指摘と全体に適用可能な形式
+% サーベイ論文で既にある指摘なら引用して説得力補強
+% もう一息説得力がほしい
+% 動画対象はどこまでできている？
+
+%\newpage
+%実験2
+%%目的
+さらに、媒体が多様化する中で早急な対策が必要な形式として、合成音声による偽情報の検出も目指した。
+新たなSNSとして文章や画像以外を扱う形式が出現していることと、任意の人物の音声を合成によって容易に再現できるようになっている点
+%、そして合成技術の発展によって音声波形のみから検出する手法の性能維持が難しくなっている点
+から、本研究では音声を対象とした。
+%手法
+既存手法の多くは生体認証システムを想定した形式であるため、音声波形を分析する形が中心だった。
+ただし合成技術の発展によって、音声波形のみから検出する手法の性能維持が難しくなっている。
+また、SNS上で投稿される合成音声による偽情報を検出したい場合、内容の疑わしさも考慮に入れる必要がある。
+よって本研究は虚偽の主張を行うなりすまし音声の検出を目標に、発話内容と音声波形の両面から検出を行う手法を提案する．
+提案手法では、既存手法と同じく音声波形を直接入力とする部分と、
+発話内容の信憑性を評価するための発話内容から得た文章埋め込みを入力とする部分からなる．
+%実験
+SNS上に投稿された文章を読み上げる合成音声を使った実験では、
+音声波形のみを考慮した手法では等価エラー率が50.7\%とランダム選択に近しい結果を示したことに対して、提案手法では44.6\%と改善がみられた。
+
+%結論
+これらの提案手法を用いることによって、コメントの生成という新しい形式の真偽判断材料を提供するとともに、
+文章による記事に限らず、疑わしい主張を行う音声に対しても波形と内容の両面から真偽確認を可能にすることで、
+SNS利用の安全性向上への貢献が期待できる。
+
+%
+%\end{abstract}
+
+\cleardoublepage

@@ -1,0 +1,234 @@
+% $Id: master_thesis.tex,v 1.4 2004/01/29 08:52:25 yoshi Exp $
+% 使う環境に合わせて，以下のどちらかをコメントアウト
+%\documentstyle[12pt]{j-report}  % jLaTeX
+\documentclass[a4paper,twoside,12pt,uplatex]{jsreport}    % LaTeX2e
+\usepackage{multicol}
+\usepackage{epsf}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{boxedminipage}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ascmac}
+\usepackage{enumerate}
+\usepackage{xurl}
+\usepackage{multirow}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{footnote}
+\usepackage[japanese,english]{babel}
+\usepackage{siunitx}
+\usepackage{amsmath,amssymb,amsthm}% 数式関連のパッケージ
+\usepackage{mathtools}
+\usepackage[dvipdfmx,hypertexnames=false,setpagesize=false]{hyperref}
+\usepackage{pxjahyper}
+\usepackage{cleveref}
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\let\globcount\newcount
+\usepackage{autonum}
+\usepackage{lscape}
+
+\usepackage{array,etoolbox}
+\preto\tabular{\setcounter{magicrownumbers}{0}}
+\newcounter{magicrownumbers}
+\def\rownumber{}
+
+\crefname{equation}{式}{式}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{figure}{図}{図}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{table}{表}{表}% {環境名}{単数形}{複数形} \crefで引くときの表示
+\crefname{algorithm}{Algorithm}{Algorithm}
+
+\crefname{chapter}{第}{第}
+\creflabelformat{chapter}{#2#1章#3}
+\crefname{section}{第}{第}
+\creflabelformat{section}{#2#1節#3}
+\crefname{subsection}{第}{第}
+\creflabelformat{subsection}{#2#1小節#3}
+
+\theoremstyle{definition}% 日本語用．定理とか斜体にならないようにする
+\newtheorem{theorem}{定理}
+\crefname{theorem}{定理}{定理}
+\newtheorem{lemma}{補題}
+\crefname{lemma}{補題}{補題}
+\newtheorem{corollary}{系}
+\crefname{corollary}{系}{系}
+\newtheorem*{proof*}{証明}
+\crefname{proof*}{証明}{証明}
+\newtheorem{assumption}{仮定}
+\crefname{assumption}{仮定}{仮定}
+\newtheorem{definition}{定義}
+\crefname{definition}{定義}{定義}
+\newtheorem{remark}{注意}
+\crefname{remark}{注意}{注意}
+\newtheorem{proposition}{命題}
+\crefname{proposition}{命題}{命題}
+
+
+\newcommand{\crefpairconjunction}{と}
+\newcommand{\crefrangeconjunction}{から}
+\newcommand{\crefmiddleconjunction}{，}
+\newcommand{\creflastconjunction}{，および}
+
+\captionsetup*[table]{position=top}
+\captionsetup*[subtable]{position=top}
+\captionsetup*[figure]{position=bottom}
+\captionsetup*[subfigure]{position=bottom}
+
+
+% macro: to explain a line of algorithm figure. #1 is "line number". #2 is "process description"
+\def\line#1#2{\hbox{\hbox to 1.5zw{#1:\hfil} #2}}
+\def\ub#1{\underline{\bf #1}}
+
+\newenvironment{sourcecode}%
+{\begingroup
+ \vspace{\baselineskip}
+ \vspace{-10.5pt}
+ \hrule % height 0.5pt
+ \vspace{10.5pt}
+ \setlength{\baselineskip}{10pt}
+ \footnotesize}%
+{
+ %\vspace{-10.5pt}
+ \vspace{10.5pt}
+ \hrule % height 0.5pt
+ \vspace{10.5pt}
+ \endgroup}
+
+\newenvironment{sourcecode2}%
+{\begingroup
+ \vspace{\baselineskip}
+ \vspace{-10.5pt}
+% \hrule % height 0.5pt
+% \vspace{10.5pt}
+ \setlength{\baselineskip}{10pt}
+ \begin{quote}\small}%
+{\end{quote}
+% \vspace{-10.5pt}
+% \hrule % height 0.5pt
+ \vspace{10.5pt}
+ \endgroup}
+
+
+% ページサイズを指定 (LaTeX2eと相性がいいかも？)
+%\oddsidemargin -10 pt      %   Left margin on odd-numbered pages.
+%\evensidemargin 10 pt      %   Left margin on even-numbered pages.
+%\marginparwidth 1 in       %   Width of marginal notes.
+%\oddsidemargin 0 in      %   Note that \oddsidemargin = \evensidemargin
+%\evensidemargin 0 in
+%\marginparwidth 0.75 in
+%\textwidth 6.375 true in % Width of text line.
+%\textheight=620pt
+
+%\input{MyEnvironment.tex}
+%\input{Pagestyle.tex}
+%\renewcommand{\bibname}{参考文献}
+
+%========================================================================%
+%========================================================================%
+%========================================================================%
+
+\begin{document}
+
+% ここで行間を調整
+\baselineskip 22pt
+%\baselinestretch{3.0}
+
+%======  タイトルと要旨  ================================================%
+\begin{titlepage}
+  \Large
+  %\vspace*{9mm}
+  \begin{center}
+   %%%%%%%%%%% タイトル，氏名，所属，指導教員%%%%%%%%%%%%%%
+   {\LARGE     %%% for 12pt
+      SNSに投稿された音声を含む偽情報\\に対応した早期検出手法の提案
+    }
+  \end{center}
+  \vspace{60mm}
+  \centerline{\bf 栁 裕太}
+  \vspace{20mm}
+  \centerline{電気通信大学大学院情報理工学研究科}
+  \centerline{博士（工学）の学位申請論文}
+  \vspace{25mm}
+  \centerline{\large 2024年9月}
+
+
+  %%%%%%%%% 博士論文審査委員会
+  \cleardoublepage
+  \begin{center}
+   %%%%%%%%%%% タイトル，氏名，所属，指導教員%%%%%%%%%%%%%%
+   {\LARGE     %%% for 12pt
+      SNSに投稿された音声を含む偽情報\\に対応した早期検出手法の提案
+    }
+  \end{center}
+  \vspace{60mm}
+  \hspace{50mm}博士論文審査委員会\\
+  %\hspace{60mm}主査 \hspace{6mm} 大須賀 昭彦 \hspace{3mm} 教授\\
+  \hspace{60mm}主査 \hspace{6mm} 田原 康之 \hspace{3mm} 准教授\\
+  \hspace{60mm}委員 \hspace{6mm} 折原 良平 \hspace{3mm} 連携教授\\
+  \hspace{60mm}委員 \hspace{6mm} 内海 彰 \hspace{3mm} 教授\\
+  \hspace{60mm}委員 \hspace{6mm} 羽田 陽一 \hspace{3mm} 教授\\
+  \hspace{60mm}委員 \hspace{6mm} 稲葉 通将 \hspace{3mm} 准教授\\
+  \thispagestyle{empty}
+  %%%%%%%%%% 著者権 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \cleardoublepage
+  \vspace*{70mm}
+  \centerline{\LARGE 著作権所有者}
+  \vspace{20mm}
+  \centerline{\bf 栁 裕太}
+  \vspace{10mm}
+  \centerline{\large 2024}
+  \thispagestyle{empty}
+\end{titlepage}
+\thispagestyle{empty}
+\include{chapters/abstracts}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\pagestyle{plain}
+%======  目次の生成  ====================================================%
+\tableofcontents
+\listoffigures
+\listoftables
+\cleardoublepage
+
+%\listofprograms
+
+%\newpage
+\pagestyle{headings}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\cleardoublepage
+\input{chapters/introduction}
+\cleardoublepage
+\input{chapters/background}
+\cleardoublepage
+\input{chapters/relatedworks}
+\cleardoublepage
+\input{chapters/gen_comments}
+\cleardoublepage
+\input{chapters/use_contents}
+\cleardoublepage
+\input{chapters/discussion}
+\cleardoublepage
+\input{chapters/conclusion}
+
+
+%======  謝辞      ======================================================%
+\cleardoublepage
+\input{chapters/acknowledgement}
+
+%======  参考文献  ======================================================%
+\cleardoublepage
+\bibliography{references}
+\bibliographystyle{junsrt}
+%======  付録  ======================================================%
+%\cleardoublepage
+%\input{furoku}
+%======  研究業績  ======================================================%
+\cleardoublepage
+\input{chapters/achievement}
+%========================================================================%
+\end{document}

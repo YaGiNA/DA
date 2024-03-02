@@ -1,0 +1,147 @@
+\chapter{発話内容を考慮した偽音声検出}\label{ch:spc_cnt}
+\section{目的}\label{sec:cnt_pur}
+\subsection{手法の位置付け}
+音声を入力とする手法はいくつかあるが、自動話者認識と自動発話認識という2種類の形式がある。
+自動話者認識
+
+\section{手法}\label{sec:cnt_mtd}
+\subsection{データセット作成手法}\label{ssc:spc_ds}
+発話内容を考慮したモデルに分類させるため、
+事実に基づく情報を読み上げる音声と事実と異なる偽情報を読み上げる音声を用意することにした。
+読み上げる対象はMuMiNデータセットが保有する英語の偽情報ツイートとした \cite{10.1145/3477495.3531744}。
+選定理由はデータセットからツイート文章とともに内容を埋め込みに変換した情報も得られることから、後述の提案手法への接続が容易に実現できるためである。
+
+読み上げ手法はVITSを採用した \cite{pmlr-v139-kim21f}。
+\cref{ch:rel_res}で紹介した文章から音声を生成するText-To-Speechの形式であることと、
+生成性能が良好である点が示されている点、
+そして音声生成学習においてLJSpeechデータセット \cite{ljspeech17}による事前学習済みモデルが公開されており、生成への活用が容易である点から採用した。
+
+なお実験で使用するにあたって、SNS上での投稿を想定して音声が3分以内に収まるように
+英単語数の上限を480に設定し、超過分は切除した上でVITSによる音声生成を行った。
+ただしTwitterツイートは仕様上480文字までの制限があるため、今回実験で使用した音声長は最長でも24秒である。
+データセットの統計は\cref{tb:dataset}の通りである。
+
+\begin{table}[h]
+    \centering
+    \caption{実験で使用した偽音声データセットの統計}
+    \begin{tabular}{lc}\hline
+        項目 & 値\\\hline\hline
+        ツイート件数 & 722\\
+        最大単語数 & 50\\
+        平均単語数 & 24.9\\
+        平均音声長 [\si{s}] & 8.2\\\hline
+    \end{tabular}
+    \label{tb:dataset}
+\end{table}
+
+\subsection{検出手法}
+発話内容を考慮したモデルを構築するために、文章埋め込みを入力にもつモデルを音声波形を扱う既存手法に追加する手法を提案する。提案手法全体の概観は\cref{fig:allmodel}の通りである。
+音声波形を直接扱う既存手法として、
+ASVspoofにてベースラインとして提供された \cite{WANG2020101114}RawNet2を採用した。
+RawNet2はもともとRawNet \cite{jung19b_interspeech}から拡張された手法で、
+いずれも発話レベルの特徴抽出と特徴拡張を単一モデルで完結させた上で分類を行う。
+今回採用したRawNet2の構造は\cref{tb:rawnet2}の通りである。
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{./figures/ieice_allFig.pdf}
+    \caption{使用データセットの取得および提案手法の概観図。}
+    \label{fig:allmodel}
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./figures/ieice_nnfig.pdf} %TODO 次元情報追加
+    \caption{提案手法における内容信憑性評価部分。}
+    \label{fig:content}
+\end{figure}
+
+\begin{table}[ht]
+    \centering
+    \caption{ASVspoof 2019以降で採用されている \cite{9414234,yamagishi21_asvspoof}RawNet2の構造}
+    \begin{tabular}{l@{}c@{}l}\hline
+        層 & 入力 & 出力形式 \\\hline\hline
+        \multirow{3}{*}{調整済Sincﾌｨﾙﾀ} & 畳み込み(129,1,128) & \multirow{3}{*}{(21290, 128)}\\
+        & 最大値プーリング(3) &\\
+        & ﾊﾞｯﾁ正規化(BN) \& LeakyReLU &\\\hline
+        \multirow{6}{*}{残差ﾌﾞﾛｯｸ}&\multirow{6}{*}{$\left\{\begin{array}{c}\rm{BN \& LeakyReLU}\\
+        \rm{畳み込み(3,1,128)}\\
+        \rm{BN \& LeakyReLU}\\
+        \rm{畳み込み(3,1,128)}\\
+        \rm{最大値ﾌﾟｰﾘﾝｸﾞ(3)}\\
+        \rm{特徴ﾏｯﾌﾟｽｹｰﾘﾝｸﾞ(FMS)}\\\end{array}\right\}$}& \multirow{6}{*}{(2365, 128)}\\ \\ \\ \\ \\ \\\hline
+        \multirow{6}{*}{残差ﾌﾞﾛｯｸ}&\multirow{6}{*}{$\left\{\begin{array}{c}\rm{BN \& LeakyReLU}\\
+        \rm{畳み込み(3,1,128)}\\
+        \rm{BN \& LeakyReLU}\\
+        \rm{畳み込み(3,1,128)}\\
+        \rm{最大値ﾌﾟｰﾘﾝｸﾞ(3)}\\
+        \rm{FMS}\\\end{array}\right\}$}& \multirow{6}{*}{(29, 512)}\\ \\ \\ \\ \\ \\\hline
+        ｹﾞｰﾄ付き回帰型ﾕﾆｯﾄ&GRU(1024)&(1024)\\\hline
+        全結合層&1024&(1024)\\\hline
+        Output&1024&2\\\hline
+        %& Maxpooling(3) &\\
+    \end{tabular}
+    \label{tb:rawnet2}
+\end{table}
+
+
+提案手法は、MuMiNデータセット内にてツイートに書かれた言語に対応したBERTベースの変換モデル \cite{lewis-etal-2020-bart}を適用したツイート埋め込みを入力に、ニューラルネットワークを介して内容の信憑性を評価する。
+具体的な内容信憑性評価部分の流れは\cref{fig:content}の通りである。
+最終的な信憑性スコアは音声信憑性評価による出力と内容信憑性評価による出力の平均値とした。
+追加部分が音声を入力に使わなかった理由として、TTSによって得た合成音声は自動音声認識(Automatic Speech Recognition; ASR)による書き起こしが容易に得られることが想定でき、省略可能と考えたためである。
+%今後VCによる変換も対象に入れる場合も想定し、音声を入力としてASRから発話内容を得る形への拡張も想定している。
+
+\section{予備実験: 新型音声合成手法に対する既存検出手法の検証}
+\subsection{実験内容}
+\subsection{結果}
+\section{本実験: 発話内容考慮による検出性能改善の検証}\label{sec:cnt_main}
+\subsection{実験内容}
+発話内容も含めて音声の信憑性を評価する手法の有効性を検証するために、
+同じ合成音声でありながら事実に基づく情報とそうでない情報を真偽分類する実験を行った。
+具体的なデータセット取得の手続き\cref{ssc:spc_ds}を参照のこと。
+なおデータセット内の各ツイートのラベルはfactual/fakeの２種類である。
+RawNet2は事前学習としてASVspoof 2021にて提供されたオンライン環境を想定した音声セットであるDFデータセットで学習済のものを使用した。
+これはオンライン上に投稿された状況を想定した2019年までに提案された手法による合成音声から構成される。
+また内容信憑性評価部分も含めた学習からテストまでの流れは学習/検証/テストの比率0.7:0.1:0.2の割合で分割して行った。学習エポック数は10だった。
+
+評価指標は等価エラー率(Equal Error Rate; EER)を採用した。
+これは真偽判断の閾値を本人拒否率(False Rejection Rate; FRR)と他人受入率(False Acceptance Rate; FAR)が同値になるように調整したときのエラー率を示したものである。
+この２値は以下の式によって導出される。
+\begin{eqnarray}
+    FRR = \frac{FN}{FN+TP} \\
+    FAR = \frac{FP}{FP+TN}
+\end{eqnarray}
+
+今回の実験でTP(True Positive)は偽情報を話す合成音声を正しく虚偽と検出できた回数を示し、
+FN(False Negative)は偽情報を話す合成音声を誤って事実と分類した回数を示し、
+FP(False Positive)は事実を話す合成音声に誤って虚偽と検出した回数を示す。
+
+実験では提案手法の有効性を確認するために、
+音声のみで分類を行った場合の結果と比較した。
+
+\subsection{結果}\label{sec:cnt_res}
+実験によって音声を分類した結果は\cref{tb:result}の通りである。
+音声のみを入力として扱った場合、等価エラー率(EER)は50.7\%だった。
+EERが50\%であることは、コイントスによって決定することとと同義であることから、
+%2019年までの音声合成手法によって訓練されたRawNet2では、
+%VITSによる音声を識別することが限りなく難しいことを示している。
+%自明であるが、
+内容の真偽に関係なく、発話音声か合成音声かを区別するように訓練されたRawNet2では、
+内容が真の合成音声と内容が偽の合成音声とを区別することはできなかった。
+一方で、内容評価を行う部分を付加した場合、
+EERは44.59\%まで改善がみられた。
+
+\begin{table}[h]
+    \caption{事実に基づく情報と事実と異なる偽情報を話す合成音声を真偽分類した結果。}
+    \centering
+    \begin{tabular}{l|c}\hline
+       モデル形態 & 等価エラー率(EER)[\%] \\\hline\hline
+       音声評価 (RawNet2)のみ & 50.7\\
+       提案手法(内容評価を伴う場合) & \textbf{44.6}\\\hline
+    \end{tabular}
+    \label{tb:result}
+\end{table}
+
+\section{考察}\label{sec:cnt_evl}
+
