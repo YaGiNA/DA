@@ -16,11 +16,11 @@
 \end{quote}
 この定義はある記事をフェイクニュースと指摘した場合，例えマスメディアが発信したニュースであろうと虚偽の情報が含まれることを意味するとしている．
 コリンズ英英辞典と定義が異なるのは，虚偽の情報が含まれていると指摘したい時に使う状況を想定しているためとみられる．
-
+このように、Fake newsという単語は同じ出版会社の英英辞典でも定義にゆらぎがみられる。
 
 %misinformation, disinformation
 フェイクニュース(Fake news)と近い意味を持つ言葉としてMis-informationとDis-information, そしてMal-informationがある．
-これらの違いに関しては欧州評議会が出版したClaire WardleとHossein Derakhshanによる文書により以下の図\ref{fig:info}の通り真偽性と有害性によって分類されている\cite{wardle2017information}．
+これらの違いに関しては欧州評議会が出版したClaire WardleとHossein Derakhshanによる文書により、以下の\cref{fig:info}の通り真偽性と有害性によって分類されている\cite{wardle2017information}．
 
 \begin{itemize}
     \item \textbf{Dis-information}: 虚偽の情報であり，個人や集団に対して有害な情報．日本語では、総務省で開催された研究会で対訳として「偽情報」と表現している \cite{soumuDisinfo}。
@@ -34,8 +34,8 @@
     all forms of false, inaccurate, or misleading information designed, presented and promoted to intentionally cause public harm or for profit
 \end{quote}
 
-本研究では，第\ref{ch:introduction}章の通りフェイクニュースをdisinformationに該当する定義とする．
-また、本研究が検出対象とする情報の範囲から鑑みて、便宜上本論文では検出対象をdisinformation及び偽情報として表記する。
+本研究では，第\ref{ch:introduction}章の通り検出対象の定義をdisinformationに該当するものとする．
+%また、本研究が検出対象とする情報の範囲から鑑みて、便宜上本論文では検出対象をdisinformation及び偽情報として表記する。
 
 \begin{figure}[p]
     \includegraphics[width=\linewidth]{figures/fig_disorder.jpg}
@@ -45,7 +45,7 @@
 
 \section{偽情報の具体的な特徴}
 一口に意図的に作られた事実に反する情報と呼んでも，情報作成者の意図に悪意がどれだけ入ってくるかによって危険性は変わる．
-フェイクニュースが含まれるMis-informationとDis-informationは読者を欺こうとする悪意の度合いによって7種類に分けられるとしている\cite{wardle_2017}．
+偽情報が含まれるMis-informationとDis-informationは読者を欺こうとする悪意の度合いによって7種類に分けられるとしている\cite{wardle_2017}．
 図\ref{fig:types}は左から右の順に以下を説明している．
 
 \begin{itemize}
@@ -100,7 +100,6 @@
 同じように偽情報が陰謀論の信奉者を増やした例としてQアノンが挙げられる．
 これは「政財界とマスコミにエリートとして巣食う悪魔崇拝の小児性加害者たちに対して、トランプ前大統領は秘密の戦争を繰り広げている」という旨の内容である \cite{wendling_2021}が，
 2021年1月に発生した米国議会襲撃事件にて，多くの信奉者が逮捕された \cite{hymes_mcdonald_watson_2021}．
-
 このような陰謀論を人々に信じ込ませる手段として偽情報がSNSの発信を介して利用されている状況について，
 WWW(ワールド・ワイド・ウェブ)を発明したティム・バーナーズ・リーは不快感を示すとともに対策を呼びかけている \cite{reklaitis_2018}．
 
@@ -108,7 +107,6 @@ WWW(ワールド・ワイド・ウェブ)を発明したティム・バーナー
 2013年にAP通信のTwitterアカウントが乗っ取り被害を受け，
 「ホワイトハウスで爆発がありオバマ大統領(当時)が怪我を負った」というツイートが発信された影響で，
 一時株式市場から約1360億ドルが消失した \cite{fisher_2013}．
-
 またインドではテキストチャットアプリのWhatsAppで暴力を扇動する情報が拡散された影響で，
 多くの集団暴行致死事件が発生したと報告されている \cite{frayer_2018}．
 
@@ -133,7 +131,7 @@ Brenna M. Davidsonと小林 哲郎の論文 \cite{DAVIDSON2022107241}による�
 また、音声合成手法によって虚偽の主張を行い送金を要求する詐欺行為も複数件発生している。
 2019年に架空企業のCEOになりすまして振り込みを行うよう電話で指示する事案が発生した \cite{Stupp_2019}ほか、
 2023年には実在企業の役員に事前に許可を得てなりすまして、部下の従業員から金銭を得ることに成功したと報告されている \cite{Bunn_2023}。
-成功した要因として本人の電話番号を乗っ取った上でテキストチャットを送った点も挙げられているが、YouTubeから得た十数分程度の音声サンプルをAIに学習させてからなりすました音声を送った点も挙げられている。
+成功した要因として本人の電話番号を乗っ取った上でテキストチャットを送った点も挙げられているが、YouTubeから得た十数分程度の音声サンプルをAIに学習させて取得したなりすまし偽音声を送った点も挙げられている。
 
 
 \section{ファクトチェック}
