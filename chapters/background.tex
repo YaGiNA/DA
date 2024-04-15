@@ -23,18 +23,30 @@
 これらの違いに関しては欧州評議会が出版したClaire WardleとHossein Derakhshanによる文書により、以下の\cref{fig:info}の通り真偽性と有害性によって分類されている\cite{wardle2017information}．
 
 \begin{itemize}
-    \item \textbf{Dis-information}: 虚偽の情報であり，個人や集団に対して有害な情報．日本語では、総務省で開催された研究会で対訳として「偽情報」と表現している \cite{soumuDisinfo}。
-    \item \textbf{Mis-information}: 虚偽の情報である一方，有害性はない情報．日本語における「誤報」の定義に近い．
+    \item \textbf{Dis-information}: 虚偽の情報であり，個人や集団に対して有害な情報．
+    \item \textbf{Mis-information}: 虚偽の情報である一方，悪意はなく有害性はない情報．%日本語における「誤報」や「誤情報」の定義に近い．
     \item \textbf{Mal-information}: 事実に基づいた情報であり，個人や集団に有害性を持たせるために用いられる情報．リークやヘイトスピーチなどが含まれる．
 \end{itemize}
 
 このうちDis-informationは欧州委員会の報告書でもdisinformationとして以下の通りに定義されている \cite{doi/10.2759/739290}。
+初期の定義付けされた場合の単語に対して表記揺れが起きているが、ハイフン無しの表現が一般的となっている。
 
 \begin{quote}
     all forms of false, inaccurate, or misleading information designed, presented and promoted to intentionally cause public harm or for profit
 \end{quote}
 
-本研究では，第\ref{ch:introduction}章の通り検出対象の定義をdisinformationに該当するものとする．
+日本語では、総務省で開催された研究会で disinformation への対訳として「偽情報」と表現している \cite{soumuDisinfo}。
+また、2024年現在では政府広報より日本語の偽情報と誤情報の違いとして以下の定義付けがなされている \cite{gov2024}。
+
+\begin{itemize}
+    \item 偽情報とは？:
+    人を混乱させ惑わすために意図的・意識的に作られたウソ、虚偽の情報
+    \item 誤情報とは？:
+    勘違いや誤解により拡散された間違った情報
+\end{itemize}
+
+本研究では，第\ref{ch:introduction}章の通り検出対象の定義をdisinformation・偽情報に該当するものとする．
+また、偽情報の定義としては情報の内容に焦点を当てている点に留意する必要がある。
 %また、本研究が検出対象とする情報の範囲から鑑みて、便宜上本論文では検出対象をdisinformation及び偽情報として表記する。
 
 \begin{figure}[p]
@@ -43,26 +55,26 @@
     \label{fig:info}
 \end{figure}
 
-\section{偽情報の具体的な特徴}
-一口に意図的に作られた事実に反する情報と呼んでも，情報作成者の意図に悪意がどれだけ入ってくるかによって危険性は変わる．
-偽情報が含まれるMis-informationとDis-informationは読者を欺こうとする悪意の度合いによって7種類に分けられるとしている\cite{wardle_2017}．
-図\ref{fig:types}は左から右の順に以下を説明している．
+% \section{偽情報の詳細な分類}
+% 一口に悪意によって意図的に作られた事実に反する情報と呼んでも，情報作成者の意図に悪意がどれだけ入ってくるかによって危険性は変わる．
+% 偽情報が含まれるMis-informationとDis-informationは読者を欺こうとする悪意の度合いによって7種類に分けられるとしている\cite{wardle_2017}．
+% 図\ref{fig:types}は左から右の順に以下を説明している．
 
-\begin{itemize}
-    \item \textbf{Satire or parody}: 皮肉あるいはパロディ．危害を加える意図はないが，読者を騙す可能性をもつ．最も悪意が少ない．
-    \item \textbf{False connection}: 見出しやキャプションが内容と乖離している．
-    \item \textbf{Misleading content}: ミスリード．情報を誤解を招く方向に利用している．
-    \item \textbf{False context}: 本当の内容が虚偽の文脈情報で共有されている．
-    \item \textbf{Imposter content}: 情報源として虚偽のものを使っている．
-    \item \textbf{Manipulated content}: 本当の情報や画像を操作して騙そうとしている．
-    \item \textbf{Fabricated content}: 新しい内容が完全に虚偽であり，騙して実害を与えようとしている．最も悪意が多い．
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{Satire or parody}: 皮肉あるいはパロディ．危害を加える意図はないが，読者を騙す可能性をもつ．最も悪意が少ない．
+%     \item \textbf{False connection}: 見出しやキャプションが内容と乖離している．
+%     \item \textbf{Misleading content}: ミスリード．情報を誤解を招く方向に利用している．
+%     \item \textbf{False context}: 本当の内容が虚偽の文脈情報で共有されている．
+%     \item \textbf{Imposter content}: 情報源として虚偽のものを使っている．
+%     \item \textbf{Manipulated content}: 本当の情報や画像を操作して騙そうとしている．
+%     \item \textbf{Fabricated content}: 新しい内容が完全に虚偽であり，騙して実害を与えようとしている．最も悪意が多い．
+% \end{itemize}
 
-\begin{figure}[p]
-    \includegraphics[width=\linewidth]{figures/fig_types.jpg}
-    \caption{誤情報(Mis-information, Dis-information)を作者の悪意の程度によって7種類に分類した図\cite{wardle_2017}．}
-    \label{fig:types}
-\end{figure}
+% \begin{figure}[p]
+%     \includegraphics[width=\linewidth]{figures/fig_types.jpg}
+%     \caption{誤情報(Mis-information, Dis-information)を作者の悪意の程度によって7種類に分類した図\cite{wardle_2017}．}
+%     \label{fig:types}
+% \end{figure}
 
 
 \section{偽情報がもつ危険性}
@@ -104,7 +116,7 @@
 WWW(ワールド・ワイド・ウェブ)を発明したティム・バーナーズ・リーは不快感を示すとともに対策を呼びかけている \cite{reklaitis_2018}．
 
 これに加え偽情報によって株価が影響を受けたケースもある．
-2013年にAP通信のTwitterアカウントが乗っ取り被害を受け，
+2013年にAP通信のTwitter(当時)アカウントが乗っ取り被害を受け，
 「ホワイトハウスで爆発がありオバマ大統領(当時)が怪我を負った」というツイートが発信された影響で，
 一時株式市場から約1360億ドルが消失した \cite{fisher_2013}．
 またインドではテキストチャットアプリのWhatsAppで暴力を扇動する情報が拡散された影響で，
@@ -114,7 +126,7 @@ WWW(ワールド・ワイド・ウェブ)を発明したティム・バーナー
 新型コロナウイルス感染症の流行により，SNS上では真偽が疑わしい感染症に関する情報が多く流布された．
 これまで流行した新型感染症であるSARS(重症急性呼吸器症候群)やMERS(中東呼吸器症候群)，
 そしてジカ熱との違いとして，SNS上で恐怖を扇動する動きが見られた点が指摘されている．
-WHOはTwitter・Facebook・Tencent(中国のテキストチャットアプリWeChatを運営する)・TikTokと連携し，
+WHOはTwitter(当時)・Facebook(当時)・Tencent(中国のテキストチャットアプリWeChatを運営する)・TikTokと連携し，
 偽情報を取り締まることで抑え込みを図っている\cite{hao_2020}．
 
 また2015年から言語・事例を問わずEU加盟国・近隣諸国に関する偽情報を集積するEUvsDisinfoプロジェクト\cite{euvsdisinfo_2020}は，
