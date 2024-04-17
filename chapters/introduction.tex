@@ -1,7 +1,7 @@
 \chapter{はじめに}
 \label{ch:introduction}
 現代において，ニュースを始めとする情報入手と拡散が簡単にできるSNS(ソーシャルメディア)は生活の重要な一部となった．
-SNSは現在$\mathbb{X}$(旧Twitter、以後Twitterと表記)をはじめFacebook, Instagram, YouTube, TikTokと多くのプラットフォームに多様な情報が拡散されている。
+SNSは現在$\mathbb{X}$(旧Twitter、以後特記事項なければTwitterと表記)をはじめFacebook, Instagram, YouTube, TikTokと多くのプラットフォームに多様な情報が拡散されている。
 しかし、中には信憑性に乏しい情報が含まれており，特に悪意によって読者を騙して誤った風説を流布するために作られた情報である偽情報(disinformation)が社会問題となっている．
 %フェイクニュースの国際的にコンセンサスが取れた定義はないが，``Fake news''という語は既に19世紀の文献に使われているという報告が英英辞典出版会社であるMerriam-Webstarから指摘されている\cite{merriam-webster}．
 %また同時に辞書に載せない理由としてフェイクニュースという語が自明の意味をもつためとも指摘されている\cite{merriam-webster}．
@@ -83,12 +83,14 @@ WHO事務局長はこの問題を``インフォデミック''と呼び，偽情�
 中でも偽情報を話すなりすまし偽音声や偽動画(ディープフェイク)も偽情報と同じく、センセーショナルさを持つがゆえにソーシャルメディアで急速に拡散される危険性を持っている。
 広く拡散された偽情報動画の例として、2022年にウクライナのゼレンスキー大統領になりすましたものが挙げられる。
 \cref{fig:zelensky}はその動画と本人の写真を並べたものである。
-\begin{figure}  %TODO: かえる
+
+\begin{figure}[h]  %TODO: かえる
     \centering
-    \includegraphics[width=0.45\textwidth]{figures/zelensky.png}
+    \includegraphics[width=0.7\textwidth]{figures/zelensky.png}
     \caption{ウクライナのゼレンスキー大統領が動画で投降を呼びかける音声付きディープフェイク動画 \cite{evon_2022}.}
     \label{fig:zelensky}
 \end{figure}
+
 この動画は武器を捨てて投稿するよう呼びかけていたが、事実確認(ファクトチェック)によって虚偽と認められた \cite{Staff_2020}。
 他にもアメリカのペロシ前下院議長になりすました動画が2023年に投稿されており、ロイター通信によって虚偽と確認されている \cite{Check_2023}。
 このようなディープフェイク映像の対策として、映像そのものの分析 \cite{8683164}やメディアの出自 \cite{8668407}から信憑性を評価して検出を目指した研究が提案されている。
@@ -101,12 +103,12 @@ WHO事務局長はこの問題を``インフォデミック''と呼び，偽情�
 
 \begin{figure}[h]
 \centering
-  \begin{minipage}[b]{0.8\linewidth}
+  \begin{minipage}[b]{0.9\linewidth}
     \centering
     \includegraphics[keepaspectratio, width=0.8\linewidth]{figures/vc.png}
     \subcaption{Voice Conversionによる場合。}
   \end{minipage}
-  \begin{minipage}[b]{0.8\linewidth}
+  \begin{minipage}[b]{0.9\linewidth}
     \centering
     \includegraphics[keepaspectratio, width=0.8\linewidth]{figures/tts.png}
     \subcaption{Text-To-Speechによる場合。}

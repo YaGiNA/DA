@@ -3,7 +3,7 @@
 \label{ch:purpose}
 \subsection{対象}
 今回対象とする情報は，既にファクトチェックによって真偽が評価されているニュースと，ニュースに対してSNS上で寄せられたコメントである．
-詳細な仕様は第\ref{sec:dataset}節で採用したデータセットについて説明する．
+データセットの詳細な仕様は\cref{sec:dataset}で説明する．
 真偽はデータセットが採用しているReal・Fakeの2種類である．
 また今回対象とする言語は英語である．
 
@@ -16,7 +16,7 @@ Fakeのコメントは特に3件目のように信憑性に疑問を投げかけ
 このことから，コメントを考慮することで，ユーザによる反応から真偽を判断するにあたって有力な手がかりを得られることが予想される．
 ただし早期検出に向けて検出実験で使用できるコメントの数が制限されるため，必ずしもそういった情報が得られる訳ではない点に留意が必要である．
 \begin{landscape}
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \caption{実験で使用した記事本文の冒頭と実在コメント3件の例．いずれもGossipCopでファクトチェックされている．}
     \label{tbl:data_example}
@@ -95,7 +95,10 @@ $a_i$と$c_{a_{i1}}, c_{a_{i2}}$から$\hat{c_{a_{i3}}}$を生成するよう訓
 \label{sec:method_generate}
 先行研究により，自然言語文章生成モデルは言語モデルの1つとされており，式\ref{eq:generate}のように
 文章$x = \mathrm{w}_1^T = (\mathrm{w}_1, \mathrm{w}_2, ..., \mathrm{w}_T)$
-はある単語$\mathrm{w}_t$が生成される前の単語群$ \mathrm{w}_1^{t-1}$による条件付き確率の総積であると定義されている．
+の出現確率 $p(x)$は
+% ある単語$\mathrm{w}_t$が生成される前の単語群$ \mathrm{w}_1^{t-1}$による
+ある単語群$ \mathrm{w}_1^{t-1}$の後に$\mathrm{w}_t$が生成される
+条件付き確率の総積であると定義されている．
 
 \begin{equation}
     \label{eq:generate}
@@ -161,7 +164,7 @@ Groverモデルに倣い，提案モデルは以下の同時分布として定�
     \label{fig:process}
 \end{figure}
 
-\begin{algorithm}[p]
+\begin{algorithm}[h]
     \caption{提案モデルが行うコメント生成学習の流れ}
     \label{alg:generate}
     \begin{algorithmic}[1]
@@ -215,12 +218,12 @@ Groverモデルに倣い，提案モデルは以下の同時分布として定�
 \subsection{データセット}
 \label{sec:dataset}
 記事とそれに寄せられたコメントをもつデータセットとしてFakeNewsNet\cite{Shu2018FakeNewsNetAD}を採用した．
-これはファクトチェックプラットフォームであるPolitiFact(政治ニュース専門)とGossipCop(芸能ニュース専門)によりファクトチェック(真偽ラベル付けも兼ねる)が行われた記事の内容と，それにTwitter(取得当時)上で寄せられたコメント投稿等を持っている．
+これはファクトチェックプラットフォームであるPolitiFact(政治ニュース専門)とGossipCop(芸能ニュース専門)によりファクトチェック(真偽ラベル付けも兼ねる)が行われた記事の内容と，それにTwitter上で寄せられたコメント投稿等を持っている．
 
 実験に先立ち，今回のモデルの構造上少なくとも3件コメントが寄せられているニュースである必要がある他，そのいずれも英文で書かれたコメントである記事とコメントのセットを選出した．
 表\ref{tbl:dataset}の通り今回，PolitiFactを使用した実験ではReal・Fakeで各200セット，GossipCopでは各ラベル毎に2000セット使用した．
 
-\begin{table}[p]
+\begin{table}[h]
     \caption{実験で使用したラベル毎のデータセット内容．記事数・コメント数はRealとFakeともに同数である．}
     \label{tbl:dataset}
     \centering
@@ -331,27 +334,36 @@ GossipCopを対象とした真偽分類実験結果は表\ref{tbl:classify_resul
         
 \end{table}
 
-\begin{landscape}
-\begin{table}[p]
+% \begin{landscape}
+\begin{table}[h]
     \caption{実際に生成されたコメントの一部の冒頭．"\textbackslash n"は改行記号である．}
     \label{tbl:generated_comments}
     \centering
     \begin{tabular}{ll}
         \hline
         ラベル & 生成コメント(冒頭) \\ \hline
-        Real & \texttt{talks to theWa at theus\textbackslash n�, Read,rin would Huck Randall. didn}...\\
-        Real & \texttt{accuracy!co/g Making, single change of Wyn, the fell Featuresogue,}...\\
-        Real & \texttt{Vi thepressBir 143 Introdu sting Sullivan remarksregnancy prof}...\\
-        Real & \texttt{she theheyhl height backyardGame his-Whereas to peach THRrd, go}...\\
-        Real & \texttt{gory for Emil-----][PU Adidasolan Song and Patrick.itans.\textbackslash n\textbackslash n}...\\ \hline
-        Fake & \texttt{guest Chelsea1p henEach psychologicalZEinspired second resort}...\\
-        Fake & \texttt{eeleurg, Rum rates as aHS Army to week it3 transplant nomination KnW}... \\
-        Fake & \texttt{View was22 the Ridge caval Shar silicone Copyright warm Yourhm Had,}...\\
-        Fake & \texttt{\textbackslash n\textbackslash n\textbackslash n\textbackslash n\textbackslash n\textbackslash nThe756 anticipating appetite sungIMels sightings in}...\\
-        Fake & \texttt{s tagging going.What back advocate Rum to- lonelymentation her tie}...\\ \hline
+        \multirow{2}{*}{Real} & \texttt{talks to theWa at theus\textbackslash n�,}\\
+        & \texttt{Read,rin would Huck Randall. didn}...\\\hline
+        \multirow{2}{*}{Real} & \texttt{accuracy!co/g Making,} ...\\
+        & \texttt{single change of Wyn, the fell Featuresogue,}\\\hline
+        \multirow{2}{*}{Real} & \texttt{Vi thepressBir 143 Introdu}\\
+        & \texttt{sting Sullivan remarksregnancy prof}...\\\hline
+        \multirow{2}{*}{Real} & \texttt{she theheyhl height backyardGame}\\
+        & \texttt{his-Whereas to peach THRrd, go}...\\\hline
+        \multirow{2}{*}{Real} & \texttt{gory for Emil-----][PU}\\ & \texttt{Adidasolan Song and Patrick.itans.\textbackslash n\textbackslash n}...\\ \hline\hline
+        \multirow{2}{*}{Fake} & \texttt{guest Chelsea1p henEach}\\
+        & \texttt{psychologicalZEinspired second resort}...\\\hline
+        \multirow{2}{*}{Fake} & \texttt{eeleurg, Rum rates as aHS Army}\\
+        & \texttt{to week it3 transplant nomination KnW}... \\\hline
+        \multirow{2}{*}{Fake} & \texttt{View was22 the Ridge caval Shar}\\
+        & \texttt{silicone Copyright warm Yourhm Had,}...\\\hline
+        \multirow{2}{*}{Fake} & \texttt{\textbackslash n\textbackslash n\textbackslash n\textbackslash n\textbackslash n\textbackslash nThe756 anticipating}\\
+        & \texttt{appetite sungIMels sightings in}...\\\hline
+        \multirow{2}{*}{Fake} & \texttt{s tagging going.What back advocate}\\
+        & \texttt{Rum to- lonelymentation her tie}...\\ \hline
     \end{tabular}
 \end{table}
-\end{landscape}
+% \end{landscape}
 
 \section{考察}\label{sec:gen_evl}
 \subsection{真偽分類成績指標}

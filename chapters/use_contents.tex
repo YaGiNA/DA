@@ -6,7 +6,7 @@
 % 音声を入力とする話者認識(Speaker Recognition)には、話者識別(Speaker Identification)と話者照合(Speaker Verification)という2種類の形式がある \cite{FURUI1997859,628714,5745552}。
 % \cref{fig:speaker_recog}は2種類の形式の違いを示す。
 
-% \begin{figure}[p]
+% \begin{figure}[h]
 %     \centering
 %     \begin{minipage}{0.9\linewidth}
 %         \centering
@@ -53,9 +53,9 @@
     \item 事実を話す本人音声
 \end{itemize}
 
-また、\cref{fig:twoPerspective}は内容信憑性・本人性の2種類による配置を表す。
+また、\cref{fig:twoPerspective}は内容信憑性・本人性の2次元で定義される、本研究の扱う音声の空間を表す。
 
-\begin{figure}[p]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{figures/D論概念図.pdf}
     \caption{発話内容の信憑性と、発話者の本人性による音声の種類。本研究では合成音声で話す偽情報と本人音声で話す事実の2種類に着目する。}
@@ -72,8 +72,9 @@
 一方で、技術の発展によりマスメディア以外でも簡単に使えるゆえに投稿の増加も激しいと判断し、本研究での検出対象として含めた。
 
 偽情報を話す本人音声は実際の例として演説や講演会、そして特殊詐欺などが挙げられる。
-この場合は実際に話さなければならない都合上、SNS上での事例が偽情報を話すなりすまし音声に比べて変化が少ないほか、
-先行研究として特殊詐欺の自動検出を目指した事例 \cite{近野恵2023}があるため、
+この場合は実際に話さなければならない都合上、SNS上での事例が偽情報を話すなりすまし音声に比べて増加が緩やかである。
+具体的には、DeepMind社による調査では2023年において音声による偽情報は2022年に比べて8倍に増加した一方で、動画は3倍にとどまっている\cite{Ulmer_Tong_2023}。
+また動画を対象とした先行研究として特殊詐欺の自動検出を目指した事例 \cite{近野恵2023}があるため、
 検出したい対象に対して重要度が比較的高くないと判断し、本研究では扱わないこととした。
 
 以上から、本研究における最終目的は事実を話す合成音声と偽情報を話すなりすまし音声の2種類の音声から検出を行うこととする。
@@ -83,7 +84,7 @@
 我々の手法には、波形を分析する部分と、発話内容を評価する部分の2つの異なる処理部分が組み込まれている。
 \cref{fig:structure}は、我々の提案する手法の構造を示している。これより各部の詳細を説明する。
 
-\begin{figure}[p]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{figures/Structure.pdf}
     \caption{データセットの生成から提案手法が行う分析の流れ。}
@@ -91,7 +92,7 @@
 \end{figure}
 
 \subsection{波形分析}
-偽音声の波形を直接分析する形式として、RawNet2とRawBoost、そして本実験ではSSL-Antispoofingを採用した。
+偽音声の波形を直接分析するモデルとして、RawNet2とRawBoost、そしてSSL-Antispoofingを採用した。
 
 \subsubsection{RawNet2}
 音声波形を直接扱う既存手法として、
@@ -125,7 +126,7 @@ $\hat{y}$はRawNet2による出力に該当し、log関数にかけられてい�
 %    \label{fig:content}
 %\end{figure}
 
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \caption{ASVspoof 2019以降で採用されている \cite{9414234,yamagishi21_asvspoof}RawNet2の構造}
     \begin{tabular}{l@{}c@{}l}\hline
@@ -176,7 +177,7 @@ RawNet2との違いとして、入力を直接受ける部分がSincフィルタ
 採用した理由として、データセット内でテキスト埋め込みが特徴としてすぐに使える点が挙げられる。
 この埋め込みはBART-large-CNN \cite{lewis-etal-2020-bart}を使って生成される。
 投稿埋め込み用の分類器としてXGBoost \cite{10.1145/2939672.2939785}を採用した。
-今後のの計画には、ディープニューラルネットワークモデルを組み込むことが含まれている。
+今後の計画には、ディープニューラルネットワークモデルを組み込むことが含まれている。
 また、自動音声認識モデルを統合し、ソーシャ ルメディアのコンテキスト内でDeep Fakeの声を検出する包括的なアプローチを取り入れることも視野に入れている。
 損失$L_{emb}$は、Chen Tら \cite{10.1145/2939672.2939785}で詳しく説明されているように、重み付き二乗損失の平均として計算され、以下のように定義される。
 
@@ -226,7 +227,7 @@ Text-To-Speech(TTS)による読み上げ手法はVITSを採用した \cite{pmlr-
 もっとも、$\mathbb{X}$の投稿は仕様上480文字までの制限があるため、今回実験で使用した音声長は最長でも24秒である。
 データセットの統計は\cref{tb:dataset}の通りである。
 
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \caption{実験で使用した偽音声データセットの統計}
     \begin{tabular}{lc}\hline
@@ -252,7 +253,7 @@ RawBoostはDFタスクに実際に参加した手法の1つである \cite{97462
 から事前学習済みモデルを入手した。
 それぞれの検出モデルが、VITSによって生成させた音声データセットのうち何割を正しく偽音声と検出できたか調べた。
 
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \begin{tabular}{lc} \hline
         事項 & 詳細 \\ \hline \hline
@@ -301,7 +302,7 @@ FP (False Positive) は、モデルが本物の音声を偽音声と誤って分
 前節の通り、最適な閾値を決定するために、ASVspoof 2021 DF データセットを利用した。
 このデータセット内でEERが求まる条件における閾値を選択した。
 
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \begin{tabular}{lcc}\hline
         モデル名 & RawNet2 & RawBoost \\ \hline \hline
@@ -312,7 +313,7 @@ FP (False Positive) は、モデルが本物の音声を偽音声と誤って分
     \label{tab:eer}
 \end{table}
 
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \begin{tabular}{lccc} \hline
         データセット & 指標 & RawNet2 & RawBoost \\\hline \hline
@@ -329,7 +330,7 @@ FP (False Positive) は、モデルが本物の音声を偽音声と誤って分
     \label{tab:preOut}
 \end{table}
 
-\begin{table}[p]
+\begin{table}[h]
     \centering
     \begin{tabular}{lcc}\hline
         モデル名 & RawNet2 & RawBoost \\ \hline \hline
@@ -378,7 +379,7 @@ RawNet2の場合、その性能は\cite{yamagishi21_asvspoof}によるASVspoof 2
 両モデルに共通する特徴は、出力値が音声に関連する疑いのレベルを反映していることである。
 ASVspoof データセットの結果に基づき、ASVspoof データセットの EER で設定された閾値を超える値は、偽音声が疑われると本研究の実験では解釈する。
 \cref{fig:hist}に示すように、ASVspoof データセットと比較すると、本研究の提供する音声は、偽音声として検出された割合が大幅に低下している。
-この結果は、当社のデータセットが主に本物の音声で構成され、本物の音声は 1 つしか含まれていないことを考えると、重大な懸念事項である。
+この結果は、予備実験のデータセットが主に合成音声で構成され、実際に検出された音声は 1つしか含まれていないことを考えると、重大な懸念事項である。
 同様の傾向は、\cref{tab:preOut} の平均値と中央値を調べたときにも明らかであり、本研究が提供した音声の平均値と中央値は、ASVspoof 2021 DF タスクで観察された値よりも著しく小さい。
 さらなる分析として、\cref{tab:greater}に出力が閾値を超えた偽音声の数を示す。
 ASVspoofデータセットが閾値を設定し、出力値がこの閾値を超えた場合、その音声はDeepFakeとして識別される。
@@ -428,7 +429,7 @@ MuMiN+VITSによる音声セットやASVspoof 2019 LAセットの結果と比較
 そのため、別の指標であるAccuracyを設定した。
 なお、本実験における波形単体も含めた全モデルにおける正誤は予備実験とは異なり、内容の偽・真を判定対象としている。
 これは、本実験においては事実を話す合成音声と偽情報を話す合成音声で実験しているためである。
-本実験では$y=0$は事実を話す合成音声を示し、$y=1$は偽情報を話す合成音声としてラベル付け及び学習を行っている。
+本実験では$y=0$は事実を話す本人音声を示し、$y=1$は偽情報を話す合成音声としてラベル付け及び学習を行っている。
 
 また、本実験ではSSL Anti-spoofingのMuMiN+VITSデータセットに対するパフォーマンスも確認した。
 このモデルは、ASVspoof 2021 DF post-challenge \cite{10155166}の参加者の中で、最高のパフォーマンスを発揮していたことから、本実験で採用した。
@@ -450,21 +451,43 @@ SSL anti-spoofingの結果は、ASVspoofの結果において、他のモデル�
 また、これら2つのデータセットの平均値から、SSL anti-spoofingを含む比較モデルの中で、提案手法が最も精度の高い性能を示した。
 この結果は、提案フレームワークは実際のSNS上での運用において最新の音声生成モデルと効果的に対応できることを示唆している。
 
-\begin{landscape}
-\begin{table}[p]
+% \begin{landscape}
+% \begin{table}[h]
+%     \caption{事実に基づく情報と、事実と異なる偽情報を話す合成音声を真偽分類した結果。(*)は、データセットに偽情報記事が含まれていないため、計算不可能な値であることを示す。}
+%     \centering
+%     \begin{tabular}{lcc|ccc}\hline
+%          & \multicolumn{2}{c}{等価エラー率 [\%]} & \multicolumn{3}{c}{accuracy [\%]}\\
+%        モデル形式 & MuMiN + VITS & ASVspoof 2019 LA & MuMiN & ASVspoof & 平均\\\hline\hline
+%        波形のみ(RawNet2) & 44.6 & 5.6 & 52.7 & 99.7 & 76.2\\
+%        波形のみ(SSL anti-spoofing) & 54.1 & 2.9 & 46.3 & 99.8 & 73.1\\\hline
+%        内容のみ(埋め込み+XGBoost) & 32.4 & \multirow{2}{*}{N/A*} & 86.8 & 11.5 & 49.2\\
+%        提案手法: 波形+内容 & 17.6 & & 81.7 & 81.6 & 81.7 \\\hline
+%     \end{tabular}
+%     \label{tab:result}
+% \end{table}
+% \end{landscape}
+
+% \begin{landscape}
+\begin{table}[h]
     \caption{事実に基づく情報と、事実と異なる偽情報を話す合成音声を真偽分類した結果。(*)は、データセットに偽情報記事が含まれていないため、計算不可能な値であることを示す。}
     \centering
-    \begin{tabular}{lcc|ccc}\hline
-         & \multicolumn{2}{c}{等価エラー率 [\%]} & \multicolumn{3}{c}{accuracy [\%]}\\
-       モデル形式 & MuMiN + VITS & ASVspoof 2019 LA & MuMiN & ASVspoof & 平均\\\hline\hline
-       波形のみ(RawNet2) & 44.6 & 5.6 & 52.7 & 99.7 & 76.2\\
-       波形のみ(SSL anti-spoofing) & 54.1 & 2.9 & 46.3 & 99.8 & 73.1\\\hline
-       内容のみ(埋め込み+XGBoost) & 32.4 & \multirow{2}{*}{N/A*} & 86.8 & 11.5 & 49.2\\
-       提案手法: 波形+内容 & 17.6 & & 81.7 & 81.6 & 81.7 \\\hline
+    \begin{tabular}{lccc}\hline
+         & \multicolumn{3}{c}{等価エラー率 [\%]} \\
+       モデル形式 & MuMiN + VITS & ASVspoof 2019 LA \\\hline\hline
+       波形のみ(RawNet2) & 44.6 & 5.6 & \\
+       波形のみ(SSL anti-spoofing) & 54.1 & 2.9 & \\\hline
+       内容のみ(埋め込み+XGBoost) & 32.4 & \multirow{2}{*}{N/A*} & \\
+       提案手法: 波形+内容 & 17.6 & &\\\hline\hline
+       & \multicolumn{3}{c}{Accuracy [\%]}\\
+       & MuMiN & ASVspoof & 平均\\\hline
+       波形のみ(RawNet2) & 52.7 & 99.7 & 76.2\\
+       波形のみ(SSL anti-spoofing) & 46.3 & 99.8 & 73.1 \\
+       内容のみ(埋め込み+XGBoost) & 86.8 & 11.5 & 49.2\\
+       提案手法: 波形+内容 & 81.7 & 81.6 & 81.7 \\\hline\hline
     \end{tabular}
     \label{tab:result}
 \end{table}
-\end{landscape}
+% \end{landscape}
 
 \section{考察}\label{sec:cnt_evl}
 \subsection{音声合成と検出の発展速度差}
