@@ -2,38 +2,38 @@
 %TODO: 発話内容を考慮した→音声波形の内容の2面から行う
 \section{目的}\label{sec:cnt_pur}
 %TODO: 話者照合云々は関連研究へ
-\subsection{形式の位置づけ}
-音声を入力とする話者認識(Speaker Recognition)には、話者識別(Speaker Identification)と話者照合(Speaker Verification)という2種類の形式がある \cite{FURUI1997859,628714,5745552}。
-\cref{fig:speaker_recog}は2種類の形式の違いを示す。
+% \subsection{形式の位置づけ}
+% 音声を入力とする話者認識(Speaker Recognition)には、話者識別(Speaker Identification)と話者照合(Speaker Verification)という2種類の形式がある \cite{FURUI1997859,628714,5745552}。
+% \cref{fig:speaker_recog}は2種類の形式の違いを示す。
 
-\begin{figure}[p]
-    \centering
-    \begin{minipage}{0.9\linewidth}
-        \centering
-        \includegraphics[width=0.8\linewidth]{figures/sd.png}
-        \subcaption{話者識別}
-    \end{minipage}
-    \begin{minipage}{0.9\linewidth}
-        \centering
-        \includegraphics[width=0.8\linewidth]{figures/sv.png}
-        \subcaption{話者照合}
-    \end{minipage}
-    \caption{話者認識の形式 \cite{俵直弘2022}}
-    \label{fig:speaker_recog}
-\end{figure}
+% \begin{figure}[p]
+%     \centering
+%     \begin{minipage}{0.9\linewidth}
+%         \centering
+%         \includegraphics[width=0.8\linewidth]{figures/sd.png}
+%         \subcaption{話者識別}
+%     \end{minipage}
+%     \begin{minipage}{0.9\linewidth}
+%         \centering
+%         \includegraphics[width=0.8\linewidth]{figures/sv.png}
+%         \subcaption{話者照合}
+%     \end{minipage}
+%     \caption{話者認識の形式 \cite{俵直弘2022}}
+%     \label{fig:speaker_recog}
+% \end{figure}
 
-話者識別は事前に登録した複数の候補者の中から提示された音声の話者を探索する1対nの推定問題であるのに対し、
-話者照合では，提示された二つの音声が同一話者によるものか否かを推定する1対1の照合問題として定義する \cite{俵直弘2022}。
-識別では、未知の話者を既知の話者のデータベースと比較し、最もよく一致する話者を識別結果として与える。
-一方で照合では、音声サンプルが主張された人物によって話されたかどうかを判断するタスクと言える \cite{1561284}。
-よって、本研究で行うなりすまし偽音声の検出は、話者照合に該当する。
+% 話者識別は事前に登録した複数の候補者の中から提示された音声の話者を探索する1対nの推定問題であるのに対し、
+% 話者照合では，提示された二つの音声が同一話者によるものか否かを推定する1対1の照合問題として定義する \cite{俵直弘2022}。
+% 識別では、未知の話者を既知の話者のデータベースと比較し、最もよく一致する話者を識別結果として与える。
+% 一方で照合では、音声サンプルが主張された人物によって話されたかどうかを判断するタスクと言える \cite{1561284}。
+% よって、本研究で行うなりすまし偽音声の検出は、話者照合に該当する。
 
-また，話者認識は，登録時と照合時で同じ内容の音声を用いるテキスト依存型（text-dependent）と，
-登録時と照合時で異なる内容の音声を用いるテキスト独立型（text-independent）に分類される \cite{俵直弘2022}。
-ASVspoofにおけるなりすまし検出では、テキスト依存型の形式を取っている。
-読み上げる音声は本人・偽いずれも新聞記事から引用した同一の文章を読み上げているため、
-実際にSNS上で偽音声による偽情報が投稿された状況から乖離がある。
-よって本研究では、テキスト独立型の話者照合を行う。
+% また，話者認識は，登録時と照合時で同じ内容の音声を用いるテキスト依存型（text-dependent）と，
+% 登録時と照合時で異なる内容の音声を用いるテキスト独立型（text-independent）に分類される \cite{俵直弘2022}。
+% ASVspoofにおけるなりすまし検出では、テキスト依存型の形式を取っている。
+% 読み上げる音声は本人・偽いずれも新聞記事から引用した同一の文章を読み上げているため、
+% 実際にSNS上で偽音声による偽情報が投稿された状況から乖離がある。
+% よって本研究では、テキスト独立型の話者照合を行う。
 
 \subsection{検出対象の位置付け}
 本研究の目的は、偽情報を話すなりすまし音声(偽音声)を自動で検出することである。
