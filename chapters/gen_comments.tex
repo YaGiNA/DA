@@ -63,7 +63,7 @@ GPT-2はTransformerをベースにした手法であり，基本的なモデル�
 
 とし，それぞれに正解ラベル群 
 \begin{equation}
-    Y=\{y_1, y_2, ..., y_n\}, y_i = \{0, 1\}
+    Y=\{y_1, y_2, ..., y_n\}, y_i \in \{0, 1\}
 \end{equation}
 
 がつけられているとする．
@@ -77,7 +77,7 @@ $y_i=1$のときは偽情報(Fake)とする．
 と定義する．
 それぞれの記事に寄せられたコメント集合を
 \begin{equation}
-    C_{a_i} = \{c_{a_{i1}}, c_{a_{i2}}, c_{a_{i3}}\}
+    C_{a_i} = \{c_{a_{i,1}}, c_{a_{i,2}}, c_{a_{i,3}}\}
 \end{equation}
 とすることで，
 記事$a_i$に対応するコメント集合を定義する．
@@ -86,7 +86,7 @@ $y_i=1$のときは偽情報(Fake)とする．
 $a_i$と$c_{a_{i1}}, c_{a_{i2}}$から$\hat{c_{a_{i3}}}$を生成するよう訓練する．
 また，実際の検出ではコメント$c_{a_{i3}}$を使用せず，生成コメント$\hat{c}_{a_{i3}}$を1件追加した
 \begin{equation}
-    C'_{a_i} = \{ c_{a_{i1}}, c_{a_{i2}}, \hat{c}_{a_{i3}}\}
+    C'_{a_i} = \{ c_{a_{i1}}, c_{a_{i2}}, \hat{c}_{a_{i}}\}
 \end{equation}
 を$C_A$の代わりに$A$とともに検出モデルに入力している．
 
@@ -122,14 +122,14 @@ Groverモデルに倣い，提案モデルは以下の同時分布として定�
 記事とコメントのセットの末尾にはセットの終端を意味するトークンである\texttt{[CLS]}を追加し，またこのトークンが真偽を分類する際に使われる．
 これはGroverモデルがベースとしているGPT-2がとる手法\cite{Radford_GPT2}と同一である．
 \texttt{[CLS]}トークンは${a_i, C'_{a_i}}$のセットがもつ特徴が集約されており，
-真偽分類モデルが真偽ラベル$\hat{y} = \{0, 1\}$を出力する．
+真偽分類モデルが真偽ラベル$\hat{y} \in \{0, 1\}$を出力する．
 図\ref{fig:process}は実際の記事とコメントのセットを真偽分類するまでの流れを示している．
 
 まず，記事に寄せられたコメント群から実験に使用するため投稿時刻が早い順に3件選出し，コメント生成の学習を行う．
 真偽分類する際には，3件の実際に投稿されたコメントから1件削除し生成されたコメントを追加してから真偽の分類を行う．
 また，同時に生成コメントを追加しなかった状況で分類を行った際の結果との比較も行った．
 
-\begin{figure}[p]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth,pagebox=cropbox,clip]{figures/fig_gpt.pdf}
     \caption{左: GPT-2のベース手法(GPT)で使われるTransformerのモデル図，右: GPTによる自然言語処理タスクの流れ\cite{radford2018improving}．}
@@ -143,7 +143,7 @@ Groverモデルに倣い，提案モデルは以下の同時分布として定�
     \label{fig:model}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth,pagebox=cropbox,clip]{figures/fig_method.pdf}
     \caption{
@@ -218,7 +218,7 @@ Groverモデルに倣い，提案モデルは以下の同時分布として定�
 これはファクトチェックプラットフォームであるPolitiFact(政治ニュース専門)とGossipCop(芸能ニュース専門)によりファクトチェック(真偽ラベル付けも兼ねる)が行われた記事の内容と，それにTwitter(取得当時)上で寄せられたコメント投稿等を持っている．
 
 実験に先立ち，今回のモデルの構造上少なくとも3件コメントが寄せられているニュースである必要がある他，そのいずれも英文で書かれたコメントである記事とコメントのセットを選出した．
-表\ref{tbl:dataset}の通り今回，PolitiFactを使用した実験ではReal・Fakeで各200セット，GossipCopでは毎に2000セット使用した．
+表\ref{tbl:dataset}の通り今回，PolitiFactを使用した実験ではReal・Fakeで各200セット，GossipCopでは各ラベル毎に2000セット使用した．
 
 \begin{table}[p]
     \caption{実験で使用したラベル毎のデータセット内容．記事数・コメント数はRealとFakeともに同数である．}
