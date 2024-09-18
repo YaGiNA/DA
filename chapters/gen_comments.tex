@@ -243,6 +243,7 @@ Groverモデルに倣い，提案モデルは以下の同時分布として定�
 生成コメントを追加することによって真偽分類の傾向に変化がみられるか調べた．
 比較対象として2件ともにデータセットがもつコメントを使用したものと，コメントを使わず記事内容のみで真偽分類したものを用意した．
 この実験にはセット数が多く汎化性が高いGossipCopにファクトチェックされた記事を採用した．
+また、PolitiFactにファクトチェックされた記事を採用した場合の結果も調べた。
 
 \subsubsection{生成コメント傾向調査}
 生成されたコメントは真偽でどのような単語の傾向が現れるか調べた．
@@ -262,7 +263,10 @@ GossipCopを対象とした真偽分類実験結果は表\ref{tbl:classify_resul
 
 また，表\ref{tbl:generated_comments}の生成されたコメントの例のように，生成コメントには文法面にさらなる改善の必要性が残された．
 
-一方，PolitiFactを対象とした生成コメントには，以下のような傾向が見られた．
+PolitiFactを対象とした真偽分類実験結果は表\ref{tbl:classify_results_pf}の通りである．
+提案モデルはいずれの指標において、全体ベストを示した．
+
+PolitiFactを対象とした生成コメントの出現割合では，以下のような傾向が見られた．
 \begin{itemize}
     \item 真偽問わず最も頻度が高い単語は``via''であり，真偽全体の単語のうち約1.5\%を占めた．
     \item それに続いて``trump''と``obama''が続いたが，いずれも割合は1\%を下回った．
@@ -279,7 +283,7 @@ GossipCopを対象とした真偽分類実験結果は表\ref{tbl:classify_resul
 
 \begin{table}
     \renewcommand{\arraystretch}{1.3}
-    \caption{分類成績}
+    \caption{GossipCopデータセットにおける分類成績}
     \label{tbl:classify_results}
     \centering
     \begin{tabular}{lccc}
@@ -292,7 +296,7 @@ GossipCopを対象とした真偽分類実験結果は表\ref{tbl:classify_resul
 \end{table}
 
 \begin{table}
-    \caption{生成コメントの追加により真偽が覆った件数}
+    \caption{GossipCopデータセットにおける生成コメントの追加によって真偽が覆った件数}
     \label{tbl:reversed}
     \centering
     \begin{tabular}{llccc} \hline
@@ -305,7 +309,21 @@ GossipCopを対象とした真偽分類実験結果は表\ref{tbl:classify_resul
 \end{table}
 
 \begin{table}
-    \caption{FakeとRealにおける生成コメント内の頻出単語一覧}
+    \renewcommand{\arraystretch}{1.3}
+    \caption{PolitiFactデータセットにおける分類成績}
+    \label{tbl:classify_results_pf}
+    \centering
+    \begin{tabular}{lccc}
+        \hline
+        入力データ           & 適合率 & 再現率 & F値 \\ \hline
+        記事本文のみ         & 0.793     & 0.851  & 0.821  \\
+        + 実在コメント2件  & 0.897 & 0.839 & 0.867 \\
+        + 生成コメント1件 & \textbf{0.909}     & \textbf{0.968}  & \textbf{0.938}   \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}
+    \caption{PolitiFactデータセットにおけるラベル別の生成コメント内の頻出単語}
     \label{tbl:frequency}
     \centering
     \begin{tabular}[]{llc}\hline
@@ -369,11 +387,14 @@ GossipCopを対象とした真偽分類実験結果は表\ref{tbl:classify_resul
 \subsection{真偽分類成績指標}
 \label{sec:classify_index}
 \cref{tbl:classify_results}が真偽分類を行った結果である．
-記事のみから分類した場合と，記事に加えてコメントを入力に含めた場合では，コメントを含めると分類成績に改善がみられることがわかる．
+GossipCopデータセットにおいては、記事のみから分類した場合と，記事に加えてコメントを入力に含めた場合では，コメントを含めると分類成績に改善がみられることがわかる．
 このことから，記事単体に加えて読者が送ったコメントが正確な真偽分類に貢献することが示されている．
 
 また実在コメントのみ入力した場合と，加えて提案モデルによって生成したコメントを含めた場合より，提案モデルは再現率は全体ベストを示したものの，適合率に大きな課題を残した．
 これは提案モデルがソーシャルコンテキストが制限されている状況でも，単純に真偽分類を行うより多くの偽情報の検出ができることを意味する．
+
+また、PolitiFactとGossipCopといったファクトチェックプラットフォームによる傾向の差異は、扱われるニューストピックの違いによるものと考えられる。
+具体的には、政治的主張の場合は公的機関や一次情報といった明確な情報源と照らし合わせやすい影響から、コメントによる指摘が発生しやすいといった要因が考えられる。
 
 \subsection{真偽分類傾向差の比較}
 \label{sec:classify_trend}
