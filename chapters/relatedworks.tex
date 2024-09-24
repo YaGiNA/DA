@@ -16,6 +16,8 @@
 これを発展させ，マルチタスク学習によって精度を向上させたモデル\cite{vasileva-etal-2019-takes}が提案されているほか，
 インタビューやニュース記事，そして英語に加えアラビア語に対応したClaimRank\cite{jaradat-etal-2018-claimrank}が提案されている．
 毎年開催されているCheckThat!では，演説やニュース記事からファクトチェックが必要な部分を検出する共有タスクが提供されている\cite{10.1007/978-3-030-45442-5_65}．
+例えば2024年開催では、共有タスクの1つとして英語・オランダ語・アラビア語の投稿での手法の公募が行われ \cite{hasanain2024overview}、
+参加手法では多くの大規模言語モデルを活用した手法が提案されている \cite{gruman2024clac,golik2024dshacker,li2024factfinderscheckthat2024refining,roysland2024iai,aguilera2024sinai,bulut2024turquaz}。
 
 また日本国内では，事実かどうか疑わしくファクトチェックが必要なTwitterのツイートを自動で検出するモデルも提案されている\cite{内山香2018}．
 
@@ -57,6 +59,9 @@ Tracyモデルは与えられた背景知識から、文章とナレッジグラ
 またGPT-3をベースに、対話応答タスクに対する利用者側のフィードバックを基準にした強化学習を行うInstructGPTも提案されており\cite{NEURIPS2022_b1efde53}、
 ベースモデルのパラメータ数を拡張させたGPT3.5を使用した対話応答AIはChatGPTとして一般に提供されている\cite{RAY2023121}。
 また、更にパラメータ数を拡張させたGPT-4も提案され、質問応答に限らず広範なタスクの成績が改善されている\cite{openai2023gpt4}。
+GPTを開発するOpenAI以外では、GoogleによるGemini \cite{geminiteam2024geminifamilyhighlycapable, geminiteam2024gemini15unlockingmultimodal}のほか、
+公開された言語モデルとしてMetaによるLLaMA \cite{touvron2023llamaopenefficientfoundation}はその後 Llama 2 \cite{touvron2023llama2openfoundation} 及びLlama 3 \cite{dubey2024llama3herdmodels} が提案されている。
+
 
 \subsection{偽情報記事生成}
 \label{sec:generate}
@@ -95,7 +100,6 @@ Beizhe Huらによる研究 \cite{Hu_Sheng_Cao_Shi_Li_Wang_Qi_2024}では、大�
 他の報告によると、単純にLLMに対して情報を入力するだけでは性能が悪いため、LLMが情報の背景を理解しやすいように入力情報を調整した場合性能が改善した \cite{doi:10.1137/1.9781611978032.50}。
 LLMに限らず、入力記事に加えて詳細を解説する記述を追加することは比較的簡易的な機械学習手法の検出性能を改善できるという報告もある \cite{Bonet-Jover2024}。
 
-
 \subsection{利用者の反応を活用した偽情報検出}
 コメントやRP(リポスト、RT/リツイートとも)といった記事に対する反応であるソーシャルコンテキストを考慮した手法も多く提案されており，扱うコンテキストの種類によってユーザベース\cite{Castillo:2011:ICT:1963405.1963500,8397048,DBLP:journals/corr/abs-1904-13355}
 ・投稿ベース\cite{Yang_Shu_Wang_Gu_Wu_Liu_2019,Tacchini2017SomeLI,Jin:2016:NVE:3016100.3016318}
@@ -109,7 +113,7 @@ LLMに限らず、入力記事に加えて詳細を解説する記述を追加�
 また、動画に対してユーザのコメントも含めた総合的な観点から偽情報検出を行うモデルも提案されている \cite{zong-etal-2024-unveiling}。
 
 \subsection{音声を対象とした偽情報検出}
-偽情報媒体の多様化によって、架空の主張を行う偽音声の危険性が強まっている。
+偽情報が発信される形式の多様化によって、架空の主張を行う偽音声の危険性が強まっている。
 \cref{ch:introduction}の通り、偽音声の検出はもともと生体認証システムに対するなりすまし攻撃を想定した対策が研究されていた。
 なりすまし音声による攻撃としてASVspoofは2021年以前の段階では、合成音声を電話回線を介して入力される場合と録音再生された場合の2種類を想定したシナリオを用意した \cite{7858696}。
 使用される合成音声の形は、文章を入力に使うText-To-Speech(TTS)と、
