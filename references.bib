@@ -4519,3 +4519,80 @@ numpages = {8}
   journal={Working Notes of CLEF},
   year={2024}
 }
+@inproceedings{vykopal-etal-2024-disinformation,
+    title = "Disinformation Capabilities of Large Language Models",
+    author = "Vykopal, Ivan  and
+      Pikuliak, Mat{\'u}{\v{s}}  and
+      Srba, Ivan  and
+      Moro, Robert  and
+      Macko, Dominik  and
+      Bielikova, Maria",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.793",
+    doi = "10.18653/v1/2024.acl-long.793",
+    pages = "14830--14847",
+    abstract = "Automated disinformation generation is often listed as one of the risks of large language models (LLMs). The theoretical ability to flood the information space with disinformation content might have dramatic consequences for democratic societies around the world. This paper presents a comprehensive study of the disinformation capabilities of the current generation of LLMs to generate false news articles in English language. In our study, we evaluated the capabilities of 10 LLMs using 20 disinformation narratives. We evaluated several aspects of the LLMs: how well they are at generating news articles, how strongly they tend to agree or disagree with the disinformation narratives, how often they generate safety warnings, etc. We also evaluated the abilities of detection models to detect these articles as LLM-generated. We conclude that LLMs are able to generate convincing news articles that agree with dangerous disinformation narratives.",
+}
+@inproceedings{10.1145/3627673.3679519,
+author = {Nan, Qiong and Sheng, Qiang and Cao, Juan and Hu, Beizhe and Wang, Danding and Li, Jintao},
+title = {Let Silence Speak: Enhancing Fake News Detection with Generated Comments from Large Language Models},
+year = {2024},
+isbn = {9798400704369},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3627673.3679519},
+doi = {10.1145/3627673.3679519},
+abstract = {Fake news detection plays a crucial role in protecting social media users and maintaining a healthy news ecosystem. Among existing works, comment-based fake news detection methods are empirically shown as promising because comments could reflect users' opinions, stances, and emotions and deepen models' understanding of fake news. Unfortunately, due to exposure bias and users' different willingness to comment, it is not easy to obtain diverse comments in reality, especially for early detection scenarios. Without obtaining the comments from the "silent'' users, the perceived opinions may be incomplete, subsequently affecting news veracity judgment. In this paper, we explore the possibility of finding an alternative source of comments to guarantee the availability of diverse comments, especially those from silent users. Specifically, we propose to adopt large language models (LLMs) as a user simulator and comment generator, and design GenFEND, a generated feedback-enhanced detection framework, which generates comments by prompting LLMs with diverse user profiles and aggregating generated comments from multiple subpopulation groups. Experiments demonstrate the effectiveness of GenFEND and further analysis shows that the generated comments cover more diverse users and could even be more effective than actual comments.},
+booktitle = {Proceedings of the 33rd ACM International Conference on Information and Knowledge Management},
+pages = {1732–1742},
+numpages = {11},
+keywords = {comment generation, fake news detection, large language models, synthetic data},
+location = {Boise, ID, USA},
+series = {CIKM '24}
+}
+@Article{Dathathri2024,
+author={Dathathri, Sumanth
+and See, Abigail
+and Ghaisas, Sumedh
+and Huang, Po-Sen
+and McAdam, Rob
+and Welbl, Johannes
+and Bachani, Vandana
+and Kaskasoli, Alex
+and Stanforth, Robert
+and Matejovicova, Tatiana
+and Hayes, Jamie
+and Vyas, Nidhi
+and Merey, Majd Al
+and Brown-Cohen, Jonah
+and Bunel, Rudy
+and Balle, Borja
+and Cemgil, Taylan
+and Ahmed, Zahra
+and Stacpoole, Kitty
+and Shumailov, Ilia
+and Baetu, Ciprian
+and Gowal, Sven
+and Hassabis, Demis
+and Kohli, Pushmeet},
+title={Scalable watermarking for identifying large language model outputs},
+journal={Nature},
+year={2024},
+month={Oct},
+day={01},
+volume={634},
+number={8035},
+pages={818-823},
+abstract={Large language models (LLMs) have enabled the generation of high-quality synthetic text, often indistinguishable from human-written content, at a scale that can markedly affect the nature of the information ecosystem1--3. Watermarking can help identify synthetic text and limit accidental or deliberate misuse4, but has not been adopted in production systems owing to stringent quality, detectability and computational efficiency requirements. Here we describe SynthID-Text, a production-ready text watermarking scheme that preserves text quality and enables high detection accuracy, with minimal latency overhead. SynthID-Text does not affect LLM training and modifies only the sampling procedure; watermark detection is computationally efficient, without using the underlying LLM. To enable watermarking at scale, we develop an algorithm integrating watermarking with speculative sampling, an efficiency technique frequently used in production systems5. Evaluations across multiple LLMs empirically show that SynthID-Text provides improved detectability over comparable methods, and standard benchmarks and human side-by-side ratings indicate no change in LLM capabilities. To demonstrate the feasibility of watermarking in large-scale-production systems, we conducted a live experiment that assessed feedback from nearly 20{\thinspace}million Gemini6 responses, again confirming the preservation of text quality. We hope that the availability of SynthID-Text7 will facilitate further development of watermarking and responsible use of LLM systems.},
+issn={1476-4687},
+doi={10.1038/s41586-024-08025-4},
+url={https://doi.org/10.1038/s41586-024-08025-4}
+}
+
