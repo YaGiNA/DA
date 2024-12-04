@@ -8,18 +8,133 @@
 コメントはどの媒体の情報に対して共通して自然言語として使われるため、投稿とコメントがセットで提供されているデータセットがあれば、画像・動画・音声問わずどの形式の偽情報にも適用が可能となる。
 
 \section{大規模言語モデルによる影響}
+%GPT3.5の場合
 大規模言語モデル(LLM)の性質として、事実に基づかない情報を提供するハルシネーション(Hallucination)が指摘されている \cite{Alkaissi2023-bo}。
 これはモデルの学習及び推論において文章の自然さが優先され、内容が事実に基づくかがあまり確認されていない点が理由として考えられる。
 よって、LLMのハルシネーションが偽情報検出において意図しない動作を行う危険性がある。
 
-よって、偽情報提供側がLLMを利用して意図的に偽情報を投稿した場合への対策も必要である。
+\cref{ch:gen_com}の通り、本研究でベースとする言語モデルはGPT-2であった。
+言語モデルは急速な改善を進めており、後継モデルがいくつか提案されている。
+
+\cref{tab:gpt35}は後継モデルの1つであるGPT-3.5によって偽情報に対してコメントを生成させた例である。
+いずれの例においても、コメントは一見完成度が高い一方で偽情報であることを疑う記述が殆どみられない。
+一方で、\cref{tab:gpt35sus}は同じモデルに対して懐疑的なコメントを生成するよう指示文を変えた例である。
+いずれの例においても、偽情報を疑うような内容に変化している。
+このように、ある情報に対して肯定的/否定的な投稿は内容に即した形に自由に作成できることがわかる。
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|l}
+        \hline \hline 
+        偽情報 & \begin{tabular}{l}
+            フィラデルフィアのスターバックスで誤認逮捕された\\アフリカ系男性へ200万ドルの和解金 
+            \end{tabular} \\ \hline
+        指示文 & \begin{tabular}{l}
+            Please write three reactions to the claim  \\
+            on social media like twitter or Instagram.  \\
+            Claim: Black Men Arrested In Philadelphia \\
+            Starbucks Settle For \$2 Million
+        \end{tabular}  \\ \hline \hline
+        生成例 & \begin{tabular}{l}
+            This settlement is a step in the right direction, but it's essential\\
+            to remember that no amount of money can fully compensate\\
+            for the trauma and injustice experienced by those Black men.\\
+            We need systematic change to address racial\\
+            bias and discrimination in all facets of society,\\
+            including businesses like Starbucks.   
+         \end{tabular}\\
+         要約 & \begin{tabular}{l}
+            和解は正しい一歩だが、完全な償いはできない。\\
+            企業を含めて社会においてあらゆる人種差別に\\
+            対処するための組織的改革が不可欠である。
+         \end{tabular}\\ \hline
+         生成例 & \begin{tabular}{l}
+            While it's good to see some accountability from Starbucks, let's not \\
+            forget that this settlement doesn't erase the fact that racial profiling\\
+            and discrimination against Black individuals continue to persist.\\
+            This case serves as a reminder of the ongoing\\
+            fight for racial equality and justice. \\ 
+         \end{tabular}\\
+         要約 & \begin{tabular}{l}
+            事例の責任を取ったのはよいことだが、\\
+            アフリカ系に対する差別が根強く続いていることを裏付けている。\\
+            人種的平等と正義のための戦いが続いていることを想起させる。
+         \end{tabular}\\ \hline
+         生成例 & \begin{tabular}{l}
+            Two million dollars might seem like a significant sum, but the fact\\
+            remains that these Black men endured a humiliating and unjust\\
+            arrest simply for being in a Starbucks. This settlement should\\
+            prompt businesses everywhere to examine their policies and \\
+            practices to ensure they're not perpetuating racial bias in any form. 
+         \end{tabular}\\
+         要約 & \begin{tabular}{l}
+            かなりの高額に思えるが、アフリカ系がスターバックスにいただけで\\
+            不当に逮捕されたという事実は変わらない。和解はいかなる形でも\\
+            人種的偏見を改めるよう方針と慣行の検証を促すものである。
+         \end{tabular}\\ \hline
+    \end{tabular}
+    \caption{GPT3.5に対して偽情報に対するSNSのコメントを出力させた例と要約}
+    \label{tab:gpt35}
+\end{table}
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|l}
+        \hline \hline 
+        偽情報 & \begin{tabular}{l}
+            フィラデルフィアのスターバックスで誤認逮捕された\\アフリカ系男性へ200万ドルの和解金 
+            \end{tabular} \\ \hline
+        指示文 & \begin{tabular}{l}
+            Please write three reactions to the claim \\
+            on social media like Twitter or Instagram \\
+            that contain \textbf{doubtful opinions} about the claim's credibility.\\
+            Claim: Black Men Arrested In Philadelphia \\
+            Starbucks Settle For \$2 Million
+            \end{tabular}  \\ \hline \hline
+        生成例 & \begin{tabular}{l}
+            Sounds like another exaggerated story blown out of proportion for the\\
+            sake of outrage culture. \$2 million settlement for what exactly? Need \\
+            more credible sources before jumping to conclusions. \#FactCheck
+         \end{tabular}\\
+         要約 & \begin{tabular}{l}
+            また怒りを扇るための誇張話のようだ。
+            和解金は何のためだ？\\
+            結論を急ぐ前にもっと確かな情報源が必要だ。
+         \end{tabular}\\ \hline
+         生成例 & \begin{tabular}{l}
+            I'm not buying into this without more context. What were the actual\\
+            grounds for the arrest? Settlements like these often come with\\
+            confidentiality agreements, making it hard to discern the truth.\\
+            Let's not rush to judgment. \#CriticalThinking
+         \end{tabular}\\
+         要約 & \begin{tabular}{l}
+            詳細が分からないまま信じるのはやめよう。逮捕の本来の理由は何だ？\\
+            和解には秘密保持契約が伴うことが多いから、判断を急ぐのはやめよう。
+         \end{tabular}\\ \hline
+         生成例 & \begin{tabular}{l}
+            Before we start demonizing Starbucks or celebrating this settlement,\\
+            let's ask some hard questions. How much of this is about justice and\\
+            how much is about optics and PR?\\
+            Skeptical until I see concrete evidence. \#QuestionEverything
+         \end{tabular}\\
+         要約 & \begin{tabular}{l}
+            スターバックスや和解に対する意見を示す前に1つ質問しよう。\\
+            どれだけが正義のためで、どれだけが見栄やPRのためだ？\\
+            具体的な根拠を見るまでは懐疑的だ。
+         \end{tabular}\\ \hline
+    \end{tabular}
+    \caption{GPT3.5に対して偽情報に対して懐疑的なSNSのコメントを出力させた例と要約}
+    \label{tab:gpt35sus}
+\end{table}
+
+よって、偽情報提供側がLLMを利用して意図的に偽情報を投稿した場合に限らず、偽情報を支持する投稿への対策も必要である。
 \cref{ch:rel_res}の通り、既にThai Leら \cite{9338282}によってコメントを考慮した検出モデルを誤認させる手法が提案されている。
 よって、コメント生成学習において投稿されたコメントが実際に利用者によって書かれたか考慮する必要が生じている。
 LLM側でも生成過程に人間では近くできない電子透かしを導入する手法が提案されている \cite{Dathathri2024}ものの、一部の単語の置換等で回避可能であると認めている。
 
 実際に、生成された文章をLLMそのものに検出させる研究 \cite{10.1145/3655103.3655106} のほか、
 知識ベースをLLMに組み込むことで改善を目指した研究も紹介されている \cite{10.1145/3512467}。
-本研究と関連するものでは、より多様なユーザからのコメントを生成することで検出性能改善を目指した研究が提案されている\cite{10.1145/3627673.3679519}。
+本研究と関連するものでは、より多様な属性のユーザから寄せられたようなコメント群を生成することで検出性能改善を目指した研究が提案されている\cite{10.1145/3627673.3679519}。
 しかしながら、LLMの発展によって人間による文章かAIによる文章か見分けが難しくなっている点も指摘されている \cite{Elkhatat2023,chen2023can}点から、
 自然言語処理における生成文章検出タスクのさらなる発展が求められている。
 
@@ -34,6 +149,7 @@ LLM側でも生成過程に人間では近くできない電子透かしを導�
 偽情報生成・検出と同様いたちごっこの様相を呈している。
 また、今後ローカル環境での生成が可能になった場合はシステムによる抑止が難しい点からも、動画生成側の技術発展による偽動画による偽情報投稿が今後急激に増える点が予想される。
 検出においては、データセット作成において生成例が必要である点から実際の動画生成モデルの提供を待たなければならないが、今後個別対応が必要と考える。
+現状の偽情報動画を自動で検出する手法では、動画情報に限らずコメントや投稿者といった観点からの検出が提案されている \cite{zong-etal-2024-unveiling}。
 
 \section{プラットフォームへの依存}
 SNS上の検出を目指した場合、SNSプラットフォームへの依存は不可避の要素である。
